@@ -1,6 +1,9 @@
 # Use the official .NET SDK image as the build environment (for .NET 6.0 or 7.0)
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
+# Update the OS packages
+RUN apt-get update && apt-get upgrade -y
+
 # Set the working directory inside the container
 WORKDIR /src
 
@@ -19,6 +22,9 @@ RUN dotnet publish hello-world-api/hello-world-api.csproj -c Release -o /app
 
 # Use the official .NET Runtime image for running the app (for .NET 6.0 or 7.0)
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+
+# Update the OS packages
+RUN apt-get update && apt-get upgrade -y
 
 # Set the working directory inside the container
 WORKDIR /app
